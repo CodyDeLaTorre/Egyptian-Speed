@@ -13,5 +13,5 @@ class Player:
         for card in self.hand:
             card.show()
 
-    def draw_card(self):
+    def place_card(self):
         return self.hand.pop().show()
