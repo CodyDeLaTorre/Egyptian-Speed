@@ -9,7 +9,9 @@ class Card:
         self.val = val
     
     def show(self):
-        print("{} of {}".format(self.val, self.suit))
+        card = "{} of {}".format(self.val, self.suit)
+        print(card)
+        return card
 
 
 class Deck:
@@ -21,19 +23,16 @@ class Deck:
         for s in ["Spades", "Clubs", "Diamonds", "Hearts"]:
             for v in names:
                 self.cards.append(Card(s,v))
-    def show(self):
-        for c in self.cards:
-            c.show()
+
     def shuffle(self):
         for i in range(len(self.cards)-1,0,-1):
             r = random.randint(0,i)
             self.cards[i], self.cards[r] = self.cards[r] , self.cards[i]
         print("shuffling...")
         time.sleep(1)
+
     def split(self):
         print("splitting...")
         half = len(self.cards)//2
         time.sleep(1)
         return self.cards[:half], self.cards[half:]
-    # def draw_card(self):
-    #     return self.cards.pop()
