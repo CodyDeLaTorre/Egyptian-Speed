@@ -1,39 +1,34 @@
-import random
-import time
+from utils.card import Card, Deck
+from utils.player import Player
 
-names = ["2","3","4","5","6","7","8","9","10","Jack","Queen","King","Ace"]
-
-class Card:
-    def __init__(self, suit, val):
-        self.suit = suit
-        self.val = val
+# rules: 
+# You win by ending up with the whole deck
+# You always split the deck evenly between players
+# cant see you cards values
+# each player puts down a card one at a time 
+# if number card put down one card and keep going
+# if jack put down one card then give all cards to player who put down the face card
+# if queen put down two cards then give all cards to player who put down the face card
+# if king put down three cards then give all cards to player who put down the face card
+# if ace put down four cards then give all cards to player who put down the face card
+# if another player puts a face card down while putting down their required amount it switches to the next personCody
+ 
+def game():
+    pot = []
+    deck = Deck()
+    #intro
+    # deck.show()
+    name = input("whats your name?: ")
+    player = Player(name)
+    print(f"alright {player.name} let's begin")
+    print("I am going to shuffle and split the deck for us")
+    deck.shuffle()
+    split_deck = deck.split()
+    player.hand = split_deck[0]
     
-    def show(self):
-        print("{} of {}".format(self.val, self.suit))
+    # print(player.showHand())
+    print(player.draw_card())
 
 
-class Deck:
-    def __init__(self):
-        self.cards = []
-        self.build()
-
-    def build(self):
-        for s in ["Spades", "Clubs", "Diamonds", "Hearts"]:
-            for v in names:
-                self.cards.append(Card(s,v))
-    def show(self):
-        for c in self.cards:
-            c.show()
-    def shuffle(self):
-        for i in range(len(self.cards)-1,0,-1):
-            r = random.randint(0,i)
-            self.cards[i], self.cards[r] = self.cards[r] , self.cards[i]
-        print("shuffling...")
-        time.sleep(1)
-    def split(self):
-        print("splitting...")
-        half = len(self.cards)//2
-        time.sleep(1)
-        return self.cards[:half], self.cards[half:]
-    # def draw_card(self):
-    #     return self.cards.pop()
+if __name__ == "__main__":
+    game()
