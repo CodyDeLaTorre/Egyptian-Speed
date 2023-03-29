@@ -8,6 +8,7 @@
 
 #### Known Issues
 
-- pot is not returning to the players/bots hand after each round win.
-- when a face card is played it should trigger a turn switch, right now you place down all cards based on the "times_to_place" variable, then switch turns. 
+- cards are getting appeneded to the pot as strings instead of the card class
+- sometimes its working and sometimes it breaks
+- somtimes the self.pot.clear() function works and other times it doesnt. Not sure what the issue is
 - its come to my realization that recreating this type of game is hard because it's mostly a game of luck. The only thing you can do to change the course of the game is by slapping doubles
