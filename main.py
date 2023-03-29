@@ -38,30 +38,41 @@ class Game():
         print("bot: I'll start")
 
     def game_loop(self):
-        placed_cards = []
         if self.bot_turn_tracker == True:
             print("Bots turn")
             self.times_to_place +=1
             while self.times_to_place > 0:
-                placed_cards.append(self.bot.place_card())
+                self.pot.append(self.bot.place_card())
+                print(f"POT:{self.pot}")
                 self.lose_check()
                 self.times_to_place -= 1
         elif self.bot_turn_tracker == False:
             print("Players turn")
             self.times_to_place +=1
             while self.times_to_place > 0:
-                placed_cards.append(self.player.place_card())
+                self.pot.append(self.player.place_card())
+                print(f"POT:{self.pot}")
                 self.lose_check()
                 self.times_to_place -= 1
-        for i in placed_cards:
-            self.pot.append(i)
+        for i in self.pot:
+            # self.pot.append(i)
             self.turn_decision(i)
         
     def turn_decision(self,card):
         string_card = str(card)
         result = self.has_numbers(string_card)
         if result == True:
+            if self.bot_turn_tracker == True:
+                for i in self.pot:
+                    print(type(i))
+                    self.bot.hand.insert(0,i)
+            else:
+                for i in self.pot:
+                    print(type(i))
+                    self.player.hand.insert(0,i)
             self.flip_turn()
+            print("should clear now")
+            self.pot.clear()
             self.game_loop()
         else:
             ace_result = self.ace_match(string_card)
