@@ -7,12 +7,12 @@ import re
 # You always split the deck evenly between players
 # cant see you cards values
 # each player puts down a card one at a time 
-# if number card put down one card and keep going
-# if jack put down one card then give all cards to player who put down the face card
-# if queen put down two cards then give all cards to player who put down the face card
-# if king put down three cards then give all cards to player who put down the face card
-# if ace put down four cards then give all cards to player who put down the face card
-# if another player puts a face card down while putting down their required amount it switches to the next personCody
+# if number card: put down one card and keep going
+# if jack: put down one card then give all cards to player who put down the face card
+# if queen: put down two cards then give all cards to player who put down the face card
+# if king: put down three cards then give all cards to player who put down the face card
+# if ace: put down four cards then give all cards to player who put down the face card
+# if another player puts a face card down while putting down their required amount it switches to the next person
  
 
 class Game():
@@ -43,7 +43,6 @@ class Game():
             self.times_to_place +=1
             while self.times_to_place > 0:
                 self.pot.append(self.bot.place_card())
-                print(f"POT:{self.pot}")
                 self.lose_check()
                 self.times_to_place -= 1
         elif self.bot_turn_tracker == False:
@@ -51,11 +50,9 @@ class Game():
             self.times_to_place +=1
             while self.times_to_place > 0:
                 self.pot.append(self.player.place_card())
-                print(f"POT:{self.pot}")
                 self.lose_check()
                 self.times_to_place -= 1
         for i in self.pot:
-            # self.pot.append(i)
             self.turn_decision(i)
         
     def turn_decision(self,card):
@@ -64,14 +61,11 @@ class Game():
         if result == True:
             if self.bot_turn_tracker == True:
                 for i in self.pot:
-                    print(type(i))
-                    self.bot.hand.insert(0,i)
+                    self.bot.hand.append(i)
             else:
                 for i in self.pot:
-                    print(type(i))
-                    self.player.hand.insert(0,i)
+                    self.player.hand.append(i)
             self.flip_turn()
-            print("should clear now")
             self.pot.clear()
             self.game_loop()
         else:
@@ -80,18 +74,22 @@ class Game():
             queen_result = self.queen_match(string_card)
             jack_result = self.jack_match(string_card)
             if ace_result == True:
+                self.times_to_place = 0
                 self.times_to_place += 3
                 self.flip_turn()
                 self.game_loop()
             elif king_result == True:
+                self.times_to_place = 0
                 self.times_to_place += 2
                 self.flip_turn()
                 self.game_loop()
             elif queen_result == True:
+                self.times_to_place = 0
                 self.times_to_place +=1
                 self.flip_turn()
                 self.game_loop()
             elif jack_result == True:
+                self.times_to_place = 0
                 self.flip_turn()
                 self.game_loop()
 
